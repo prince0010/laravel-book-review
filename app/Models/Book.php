@@ -49,7 +49,13 @@ class Book extends Model
     }
 
     // Add some scope that would only show results when they have some minimun amount of reviews 
-
+    // It will query only the review between the specific review and its higher than the specific review
+    // minReview(3) -> It will query the output only the review_count that is equals to 3 or greater than 3 review until until as long as dili maubos or below sa 3 ang review i query ang output
+    public function scopeMinReview(Builder $query, int $minReview) : Builder|QueryBuilder
+    { 
+        // We Use having() not where() clauses because when you are working with the results of aggregate functions, we need to use the having() clause
+        return $query->having('review_count', '>=', $minReview);
+    }
 
     // Lowest Rated Average
     public function scopeLowestRated(Builder $query) : Builder|QueryBuilder
@@ -57,11 +63,7 @@ class Book extends Model
         return $query->withAvg('review', 'rating')->orderBy('review_avg_rating', 'asc');
     }
     
-    public function scopeMinReview(Builder $query , int $minReview) : Builder|QueryBuilder
-    { 
-        // We Use having() not where() clauses because when you are working with the results of aggregate functions, we need to use the having() clause
-        return $query->having('review_count', '>=' , $minReview);
-    }
+   
 
     // Unpopular Review
     public function scopeUnpopular(Builder $query) : Builder|QueryBuilder 
@@ -76,12 +78,12 @@ class Book extends Model
     private function dateRangeFilter(Builder $query, $from = null, $to = null) {
 
         if($from && !$to){
-            $query->where('created_at', '>=', $to);
+            $query->where('created_at', '>=', $from);
         }elseif(!$from && $to){
-            $query->where('created_at', '<=', $from);
+            $query->where('created_at', '<=', $to);
         }
         elseif($from && $to){
-            $query->where('created_at', [$from, $to]);
+            $query->whereBetween('created_at', [$from, $to]);
         }
     }
     
