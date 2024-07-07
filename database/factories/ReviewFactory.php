@@ -32,6 +32,8 @@ class ReviewFactory extends Factory
     // THIS CUSTOM STATE METHOD COULD MAKE THE RATINGS TO HAVE A 3 STAR OR ABOVE SINCE THE FAKE RATING ABOVE MAKE SURE THAT IT WILL HAVE A RATING BELOW 3 NOT GETTING TO MORE THAT 3 ABOVE RATINGS
     // SO WE HAVE THIS CUSTOM STATE METHOD
     // CUSTOM STATE METHOD -> GENERATE A GOOD REVIEW TO HAVE SOME GOOD DIVERSITY RESULTS
+
+    // GOOD RATING FAKE DATA FOR THE 'RATING' here in the return function
     public function good(){
                 // Attributes is the values of the columns
         return $this->state(function(array $attributes){
@@ -41,7 +43,7 @@ class ReviewFactory extends Factory
         });
     }
 
-    
+    // AVERAGE RATING FAKE DATA FOR THE 'RATING' here in the return function
     public function average(){
         return $this->state(function(array $attributes){
             return [
@@ -50,6 +52,7 @@ class ReviewFactory extends Factory
         });
     }
 
+    // BAD RATING FAKE DATA FOR THE 'RATING' here in the return function
     public function bad(){
         return $this->state(function(array $attributes){
             return [
