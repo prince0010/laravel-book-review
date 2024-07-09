@@ -58,18 +58,16 @@ class Book extends Model
     }
 
     // Lowest Rated Average
-    public function scopeLowestRated(Builder $query) : Builder|QueryBuilder
-    {
-        return $query->withAvg('review', 'rating')->orderBy('review_avg_rating', 'asc');
-    }
+    // public function scopeLowestRated(Builder $query) : Builder|QueryBuilder
+    // {
+    //     return $query->withAvg('review', 'rating')->orderBy('review_avg_rating', 'asc');
+    // }
     
-   
-
-    // Unpopular Review
-    public function scopeUnpopular(Builder $query) : Builder|QueryBuilder 
-    {
-        return $query->withCount('review')->orderBy('review_count', 'asc');
-    }
+    // // Unpopular Review
+    // public function scopeUnpopular(Builder $query) : Builder|QueryBuilder 
+    // {
+    //     return $query->withCount('review')->orderBy('review_count', 'asc');
+    // }
 
     // Internal Use the Private Function
     // $query is a object and object cannot return anything since object remember that the query object is an
