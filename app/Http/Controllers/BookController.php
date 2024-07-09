@@ -20,9 +20,7 @@ class BookController extends Controller
         // here in the first argument the $title and the second argument function () If title is not empty then it will run otherwist in wont 
         // $book = Book::when($title, function ($query, $title) { 
         //     return $query->$title('title');
-
         // })
-
         // ARROW FUNCTION
         // The title($title) and the where() method is all in the local query scope in the Book.php Model where it has the scopeTitle and the $query for that is from the local query which has the where() method and you can check that in the Book.php Model
         // Creating an Optional Query using this model's when() method -> if this $title is being supplied as a query parameter to this action, then we optionally call our own local query scope called title as a reminder

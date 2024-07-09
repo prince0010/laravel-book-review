@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,7 +38,6 @@ class Book extends Model
          // No need to use the use() statement for the outside variables so basicallly you can have access of the outside variables like $from and $to
 
         return $query->withCount(['review' => fn (Builder $q) => $this->dateRangeFilter($q, $from, $to)
-              
         ])
         ->orderBy('review_count', 'desc');
     }
@@ -84,5 +84,32 @@ class Book extends Model
             $query->whereBetween('created_at', [$from, $to]);
         }
     }
-    
+
+    public function scopePopularLastMonth(Builder $query) : Builder | QueryBuilder
+    {
+        return $query->popular(now()->subMonth(), now())
+        ->highestRated(now()->subMonth(), now())
+        ->minReview(2);
+    }
+
+    public function scopePopularLast6Month(Builder $query) : Builder | QueryBuilder
+    {
+        return $query->popular(now()->subMonths(6), now())
+        ->highestRated(now()->subMonths(6), now())
+        ->minReview(2);
+    }
+
+    public function scopeRatedLastMonth(Builder $query) : Builder|QueryBuilder
+    {
+        return $query->highestRated(now()->subMonth(), now())
+        ->popular(now()->subMonth(), now())
+        ->minReview(2);
+    }
+    public function scopeRatedLast6Month(Builder $query) : Builder|QueryBuilder
+    {
+        return $query->highestRated(now()->subMonths(6), now())
+        ->popular(now()->subMonths(6), now())
+        ->minReview(2);
+    }
+
 }
