@@ -16,7 +16,7 @@ class BookController extends Controller
     {
         // Optional Title parameter, which will be used for filtering
         $title = $request->input('title');
-
+        $filter = $request->input('filter', '');
         // here in the first argument the $title and the second argument function () If title is not empty then it will run otherwist in wont 
         // $book = Book::when($title, function ($query, $title) { 
         //     return $query->$title('title');
@@ -26,8 +26,22 @@ class BookController extends Controller
         // Creating an Optional Query using this model's when() method -> if this $title is being supplied as a query parameter to this action, then we optionally call our own local query scope called title as a reminder
     //    And it is simple where $query-> that is using a LIKE operator
         $book = Book::when($title, fn ($query, $title) => $query->title($title)
-        )
-        ->get();
+        );
+
+        // match() is a statement and not a fucntion so its part of the language syntax and now a traditional function. it looks similar to switch case
+        $book = match($filter) {
+            // Define the value of the $filter
+            'popular_last_month' => $book->popularLastMonth(),
+            'popular_last_6months' => $book->popularLast6Months(),
+            'highest_rated_last_month' => $book->highestRatedLastMonth(),
+            'highest_rated_last_6months' => $book->highestRatedLast6Months(),
+
+            // the dafault is the latest() it is local built in the query scope. There are latest() and oldest() and other built in local query scope
+            default => $book->latest()
+
+        };
+
+        $book = $book->get();
 
         // This is just renders this view,
         return view('books.index', ['books' => $book]);

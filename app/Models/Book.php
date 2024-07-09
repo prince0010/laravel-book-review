@@ -85,6 +85,8 @@ class Book extends Model
         }
     }
 
+    // IT WILL RETURN THE DATA WITH A MINIMUM REVIEW OF 2 AND MORE THAN PAS 2 REVIEWS. DILI I RETURN ANG LESS THAN 1 REVIEW.
+
     public function scopePopularLastMonth(Builder $query) : Builder | QueryBuilder
     {
         return $query->popular(now()->subMonth(), now())
@@ -92,20 +94,20 @@ class Book extends Model
         ->minReview(2);
     }
 
-    public function scopePopularLast6Month(Builder $query) : Builder | QueryBuilder
+    public function scopePopularLast6Months(Builder $query) : Builder | QueryBuilder
     {
         return $query->popular(now()->subMonths(6), now())
         ->highestRated(now()->subMonths(6), now())
         ->minReview(2);
     }
 
-    public function scopeRatedLastMonth(Builder $query) : Builder|QueryBuilder
+    public function scopeHighestRatedLastMonth(Builder $query) : Builder|QueryBuilder
     {
         return $query->highestRated(now()->subMonth(), now())
         ->popular(now()->subMonth(), now())
         ->minReview(2);
     }
-    public function scopeRatedLast6Month(Builder $query) : Builder|QueryBuilder
+    public function scopeHighestRatedLast6Months(Builder $query) : Builder|QueryBuilder
     {
         return $query->highestRated(now()->subMonths(6), now())
         ->popular(now()->subMonths(6), now())
