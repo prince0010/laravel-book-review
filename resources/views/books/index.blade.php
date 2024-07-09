@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <h1 id="titlesite" class="mb-10 text-2xl">
-        Books 
+    <h1 id="titlesite" class="mb-10 text-3xl">
+        Books Review
     </h1>
 
     <!-- Loading Indicator -->
