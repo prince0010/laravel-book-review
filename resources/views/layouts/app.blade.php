@@ -37,7 +37,7 @@
     }
 
     .book-author {
-      @apply block text-slate-600;
+      @apply block text-gray-500;
     }
 
     .book-rating {

@@ -25,26 +25,35 @@ class BookController extends Controller
         // The title($title) and the where() method is all in the local query scope in the Book.php Model where it has the scopeTitle and the $query for that is from the local query which has the where() method and you can check that in the Book.php Model
         // Creating an Optional Query using this model's when() method -> if this $title is being supplied as a query parameter to this action, then we optionally call our own local query scope called title as a reminder
     //    And it is simple where $query-> that is using a LIKE operator
-        $book = Book::when($title, fn ($query, $title) => $query->title($title)
+        $bookQuery = Book::when($title, fn ($query, $title) => $query->title($title)
         );
 
         // match() is a statement and not a fucntion so its part of the language syntax and now a traditional function. it looks similar to switch case
-        $book = match($filter) {
+        $bookQuery  = match($filter) {
             // Define the value of the $filter
-            'popular_last_month' => $book->popularLastMonth(),
-            'popular_last_6months' => $book->popularLast6Months(),
-            'highest_rated_last_month' => $book->highestRatedLastMonth(),
-            'highest_rated_last_6months' => $book->highestRatedLast6Months(),
+            'popular_last_month' => $bookQuery ->popularLastMonth(),
+            'popular_last_6months' => $bookQuery ->popularLast6Months(),
+            'highest_rated_last_month' => $bookQuery ->highestRatedLastMonth(),
+            'highest_rated_last_6months' => $bookQuery ->highestRatedLast6Months(),
 
             // the dafault is the latest() it is local built in the query scope. There are latest() and oldest() and other built in local query scope
-            default => $book->latest()
+            default => $bookQuery ->latest()
 
         };
 
-        $book = $book->get();
+        // CACHED
+        // Cached the result so that the infrastructure of this web app will not be having strain or hard time in caching every result that query is running 
+        // Saving the results to an temporary storage so that it wont strain the infrastructure and just easily fetch the new results since the query is always running
+        $cachedKey = 'book:' . $filter . ':' . $title;
+        $books = cache()->remember($cachedKey, 120, fn()=> $bookQuery->get());
+        // $book = cache()->remember($cachedKey, 3600, function () use ($book) {
+        //     dd('Not from Cached');
+        //     return $book->get();
+        // });
+
 
         // This is just renders this view,
-        return view('books.index', ['books' => $book]);
+        return view('books.index', ['books' => $books]);
 
     }
 
@@ -67,9 +76,25 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // Book $book -> it is a route model binding and we didnt cached the whole book but we only cached the specific book
+    public function show(Book $book)
     {
-        //
+        // Book that we cache by the BookID
+        $cacheKey = 'book:' . $book->id;
+        
+        // Fetch the reviews
+        // So now every single book that you will visit on an individual book page like this /books/58 in the show page will be cached and will be served directly from the cached for one hour. 
+        // Aftert that the new Query to the database will be run for someone that visits this page and then it will be stored for another one hour again. 
+        $book = cache()->remember($cacheKey, 120, fn() => $book->load(['review' => fn($query) => $query->latest()]));
+        // Caching the reviews, and this cache is stored for one hour.
+
+        // Passing the Specific model in the View
+        // Route Model Binding No need to use the FindOrFail($id) 
+        // Laravel will fetch the Book for us Book $book -> Laravel will know that the argument in the route is related to an ID of a database model
+        return view('books.show', ['book' => $book]);
+            // Load some additional relationships or your can use this or lazy laoding in the template which is the show.blade.php 
+            // With the sorting out from newest to oldest we use latest() in the local query scope and with the load() it is uses so that when fetching the books in the database it will not ruin the --
+            // -- server part of fetching by all at once or you can use the Lazy Loading style as well in the Template in the show.balde.php
     }
 
     /**

@@ -4,13 +4,13 @@
 
     <div class="mb-4">
         <!-- Book Title -->
-        <h1 class="sticky top-0 mb-2 text-2xl">
+        <h1 class="sticky top-0 mb-2 text-3xl">
             {{ $book->title }}
         </h1>
 
         <!-- Book Information -->
         <div class="book-info">
-            <div class="book-author mb-4 text-lg font-semibold">
+            <div class="book-author mb-4 text-lg font-semibold ">
                 by {{ $book->author }}
             </div>
             <div class="book-rating flex items-center">
@@ -28,11 +28,12 @@
             Reviews
         </h2>
         <ul>
+            <!-- Iterate all of the reviews $book->review -->
             @forelse ($book->review as $review)
             <li class="book-item mb-4">
                 <div>
                     <div class="mb-2 flex items-center justify-between">
-                        <div class="semi-bold">{{ $review->rating }}</div>
+                        <div class="font-semibold text-lg">{{ $review->rating }}</div>
                         <div class="book-review-count">
                             {{ $review->created_at->format('M j, Y') }}
                         </div>
