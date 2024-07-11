@@ -30,22 +30,36 @@ class Book extends Model
         return $query->where('title', 'LIKE', '%' . $title . '%');
     }
 
+    public function scopeWithReviewsCount(Builder $query, $from = null, $to = null) : Builder|QueryBuilder
+    {
+                 // In the arrow function fn there is only one expression can be use and
+         // No need to use the use() statement for the outside variables so basicallly you can have access of the outside variables like $from and $to
+        //  So this is used to sort the data from the latest to the oldest data and we separate thgis to the scopePopular to make it a reused method for the other methods here
+            return $query->withCount(['review' => fn (Builder $q) => $this->dateRangeFilter($q, $from, $to)
+    ]);
+    }
+
+    public function scopeWithAvgRating(Builder $query, $from = null, $to = null) : Builder|QueryBuilder
+    {
+                 // In the arrow function fn there is only one expression can be use and
+         // No need to use the use() statement for the outside variables so basicallly you can have access of the outside variables like $from and $to
+        //  So this is used to sort the data from the latest to the oldest data and we separate thgis to the scopePopular to make it a reused scope() for the other scopes() here
+            return $query->withAvg(['review' => fn (Builder $q) => $this->dateRangeFilter($q, $from, $to)], 'rating');
+    }
+
     // Local Query Scope
     public function scopePopular(Builder $query, $from = null, $to = null) : Builder|QueryBuilder
     {
          // Filtering the Reviews 
-         // In the arrow function fn there is only one expression can be use and
-         // No need to use the use() statement for the outside variables so basicallly you can have access of the outside variables like $from and $to
-
-        return $query->withCount(['review' => fn (Builder $q) => $this->dateRangeFilter($q, $from, $to)
-        ])
-        ->orderBy('review_count', 'desc');
+        // We reused the ReviewsCount by reading the withReviewsCount() method first and then we filtered the data using the orderBy() method
+        // IT IS FINE TO USE SCOPES WITH OTHER SCOPES
+        return $query->withReviewsCount()->orderBy('review_count', 'desc');
     }
 
     // Highest Rated to Lowest Rated
     public function scopeHighestRated(Builder $query, $from = null, $to = null) : Builder|QueryBuilder
     {
-        return $query->withAvg(['review' => fn (Builder $q) => $this->dateRangeFilter($q, $from, $to)], 'rating')->orderBy('review_avg_rating', 'desc');
+        return $query->withAvgRating()->orderBy('review_avg_rating', 'desc');
     }
 
     // Add some scope that would only show results when they have some minimun amount of reviews 
@@ -112,6 +126,15 @@ class Book extends Model
         return $query->highestRated(now()->subMonths(6), now())
         ->popular(now()->subMonths(6), now())
         ->minReview(2);
+    }
+
+    
+    protected static function booted()
+    {
+    static::updated(
+        fn(Book $book) => cache()->forget('book:' . $book->book_id) );
+        static::deleted(
+            fn(Book $book) => cache()->forget('book:' . $book->book_id) );
     }
 
 }

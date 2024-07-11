@@ -41,7 +41,7 @@
     }
 
     .book-rating {
-      @apply text-sm font-medium text-slate-700;
+      @apply font-medium text-lg text-slate-700;
     }
 
     .book-review-count {
