@@ -12,6 +12,15 @@
 
 ## Book Review Laravel 
 
+> ## Clone Repository
+> click code in the upper right of the Repository and click Code 
+* Copy the HTTPS link
+* go to the terminal and type this: git clone 'HTTPS_LINK'
+* next is : cd Folder_Name_of_the_Repository 
+* and : code .
+
+## In the VsCode Terminal or the Terminal with the Directory in it
+
 > Start the local development Server : 'php artisan serve' 
 > Go to the Database, I used adminer here and create a database name : 'laravel-book-review'
 > and migrate the fake datas : 'php artisan migrate' 
