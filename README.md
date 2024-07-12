@@ -15,3 +15,20 @@
 > Start the local development Server : 'php artisan serve' 
 > Go to the Database, I used adminer here and create a database name : 'laravel-book-review'
 > and migrate the fake datas : 'php artisan migrate' 
+
+DATABASE
+> You can use mysql xammp or adminer -> http://localhost:8080/ > Make sure the Server is mysql and the username and password and the database is correct 
+* ## Server: mysql
+* ## Username: root
+* ## Password: root
+* ## Database: laravel-book-review
+
+> ## DATABASE NAME: laravel-book-review
+
+> ## DATABASE TABLE NAMES: 
+* # books
+* # reviews
+> ## you can just use this command in the terminal in this directory - 'php artisan migrate'
+* # php artisan migrate:refresh 
+or 
+* # php artisan migrate:refresh --seed 
