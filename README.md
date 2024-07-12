@@ -32,12 +32,15 @@ DATABASE
 * ### Password: root
 * ### Database: laravel-book-review
 
-> ### DATABASE NAME: laravel-book-review
+> ### DATABASE NAME: 
+* ### laravel-book-review
 
 > ## DATABASE TABLE NAMES: 
 * ### books
 * ### reviews
-> ## you can just use this command in the terminal in this directory - 'php artisan migrate'
+
+> ## you can just use this command in the terminal in this directory :
+* ### 'php artisan migrate'
 * ### php artisan migrate:refresh 
 ### or 
 * ### php artisan migrate:refresh --seed 
