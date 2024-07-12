@@ -21,15 +21,15 @@
 
 ## In the VsCode Terminal or the Terminal with the Directory in it
 
-> ## Start the local development Server : 
+## Start the local development Server : 
 ### 'php artisan serve' 
-> ## Go to the Database, I used adminer here and create a database name : 
+## Go to the Database, I used adminer here and create a database name : 
 ### 'laravel-book-review'
-> ## and migrate the fake datas : 
+## and migrate the fake datas : 
 ### 'php artisan migrate' 
 
-DATABASE
-> You can use mysql xammp or adminer -> http://localhost:8080/ > Make sure the Server is mysql and the username and password and the database is correct 
+## DATABASE
+> ### You can use mysql xammp or adminer -> http://localhost:8080/ > Make sure the Server is mysql and the username and password and the database is correct 
 * ### Server: mysql
 * ### Username: root
 * ### Password: root
