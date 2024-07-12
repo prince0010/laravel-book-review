@@ -44,3 +44,5 @@ DATABASE
 * ### php artisan migrate:refresh 
 ### or 
 * ### php artisan migrate:refresh --seed 
+
+### THERE IS THE SQL FILE LARAVEL-BOOK-REVIEW HERE IN THE DIRECTORY YOU CAN IMPORT THAT TO YOUR DATABASE BASED ON YOUR CHOOSING : MYSQL OR ADMINER OR OTHER
