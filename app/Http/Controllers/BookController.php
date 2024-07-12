@@ -57,7 +57,6 @@ class BookController extends Controller
         //     return $book->get();
         // });
 
-
         // This is just renders this view,
         return view('books.index', ['books' => $books]);
 

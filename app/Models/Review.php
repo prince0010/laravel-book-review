@@ -10,12 +10,15 @@ class Review extends Model
     use HasFactory;
 
     // we will add a fillable here for the review and rating for we can pass an array with these values
-    protected $fillable=['review', 'rating'];
+    protected $fillable = ['review', 'rating'];
 
     // This method inside the review model is used to define a so called inverse side of the one to many relationship between a review
     // and its book. Specifies that each review belongs to one book.
-    public function book(){
+    public function book()
+    {
+
         return $this->belongsTo(Book::class);
+
     }
 
     protected static function booted()
@@ -31,7 +34,9 @@ class Review extends Model
     // and those are the cases where those model events updated() and deleted() wont run. --
     // and this is the example that can trigger the model events -> in the php artisan tinker -> $review = \App\Models\Review::findOrFail(944); -> $review->rating = 2; >> $review->rating = 3; >> $review->save(); --
     // or \App\Models\Review::where('id', 944)->update(['rating' => 2]); >> This could work and trigger the model events as well
-    static::updated(fn(Review $review) => cache()->forget('book:' . $review->book_id) );
-        static::deleted(fn(Review $review) => cache()->forget('book:' . $review->book_id) );
+        static::updated(fn(Review $review) => cache()->forget('book:' . $review->book_id));
+        static::deleted(fn(Review $review) => cache()->forget('book:' . $review->book_id));
+        static::created(fn(Review $review) => cache()->forget('book:' . $review->book_id)); // so whenever a new review is created then this static is triggered and will reset the cache for a given book that is being reviewed.
+       
     }
 }
