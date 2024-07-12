@@ -12,7 +12,7 @@
 
 ## Book Review Laravel 
 
-> ## Clone Repository :
+ # Clone Repository :
 ### Cclick the Code in the upper right of the Repository and click Code 
 * Copy the HTTPS link
 * go to the terminal and type this: git clone 'HTTPS_LINK'
