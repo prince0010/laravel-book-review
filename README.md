@@ -27,17 +27,17 @@
 
 DATABASE
 > You can use mysql xammp or adminer -> http://localhost:8080/ > Make sure the Server is mysql and the username and password and the database is correct 
-* ## Server: mysql
-* ## Username: root
-* ## Password: root
-* ## Database: laravel-book-review
+* ### Server: mysql
+* ### Username: root
+* ### Password: root
+* ### Database: laravel-book-review
 
-> ## DATABASE NAME: laravel-book-review
+> ### DATABASE NAME: laravel-book-review
 
 > ## DATABASE TABLE NAMES: 
-* # books
-* # reviews
+* ### books
+* ### reviews
 > ## you can just use this command in the terminal in this directory - 'php artisan migrate'
-* # php artisan migrate:refresh 
-or 
-* # php artisan migrate:refresh --seed 
+* ### php artisan migrate:refresh 
+### or 
+* ### php artisan migrate:refresh --seed 
