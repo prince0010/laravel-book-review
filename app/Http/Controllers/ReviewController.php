@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('throttle:reviews');
-    }
+    // The throttle:review is from the RouteServiceProvider configureRateLimiting() part which the user can posts review for 5 post for every hour
+    // public function __construct()
+    // {
+    // //     // we can define many groups because we dont have always want to apply the same throttling or middleware rules to all of the Controllers
+    // //     // It allows only to post 5 reviews per hour but if someone wants to add a books to the system, they might post 1 book a DAY
+    // //     // -- so you can define different groups or different settings for RATE LIMITING.
+    //     $this->middleware('throttle:review')->only(['store']); //Middleware name is throttle and the group is review
+    // //     // so if you would leave like this, this would apply this middleware to this whole resource controller, but we only want that to store --
+    // //     // So we call and use only([]) and passing an array with the store only(['store'])
+    // }
 
     /**
      * Display a listing of the resource.

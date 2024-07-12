@@ -48,7 +48,7 @@ class BookController extends Controller
         $books = 
             cache()->remember(
             $cachedKey, 
-            3600, 
+            300, 
             fn()=>
              $bookQuery->paginate(15)
         );
@@ -93,7 +93,7 @@ class BookController extends Controller
         // Aftert that the new Query to the database will be run for someone that visits this page and then it will be stored for another one hour again. 
         $book = cache()->remember(
             $cacheKey, 
-            3600, 
+            300, 
             fn() => 
             // load() method is only useful for the models that are already loaded. Load() is an instance method, its a method on a created object.
             // So we need to use static method of a class

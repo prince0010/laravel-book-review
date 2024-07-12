@@ -123,4 +123,12 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // 'middleware_groups' => [
+    //     'web' => [
+    //         // Other middleware entries...
+    //         \App\Http\Middleware\ThrottleReviewMiddleware::class,
+    //     ],
+    // ],
+    
+
 ];

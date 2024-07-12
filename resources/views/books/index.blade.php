@@ -87,7 +87,11 @@
             </li>
         @endforelse
     </ul>
-        {{ $books->links() }}
+        @if ($books->count() > 0 && $books->hasPages())
+        <div id="pagination" class="mt-4">
+            {{ $books->links() }}
+        </div>
+    @endif
     <!-- Loading -->
     <script>
 
@@ -97,6 +101,7 @@
             document.getElementById('booksList').classList.add('hidden');
             document.getElementById('filter-container').classList.add('hidden');
             document.getElementById('titlesite').classList.add('hidden');
+            document.getElementById('pagination').classList.add('hidden');
 
         }
 
